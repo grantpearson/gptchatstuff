@@ -1,6 +1,3 @@
-
-
-
 function Add-FunctionFromGPT {
   [CmdletBinding()]
   param(
@@ -28,3 +25,8 @@ function Add-FunctionFromGPT {
   # Add the function to the PowerShell namespace
   Set-Item -Path "Function:$Alias" -Value $function
 }
+
+# Original prompt:
+# write a powershell function that takes as input the description of a command and an alias
+# and works as follows. It prompts chat gpt for a powershell function that implements that description,
+# and it adds the returned function to the powershell namespace, executed by the given alias.
