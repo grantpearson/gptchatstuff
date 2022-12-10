@@ -15,8 +15,8 @@ function Add-FunctionFromGPT {
     Install-Module openai
   }
 
-  # Load the API key from a file
-  $apiKeyFile = 'C:\path\to\api-key.txt'
+  # Load the API key from a file in the current directory
+  $apiKeyFile = Join-Path -Path (Get-Location) -ChildPath 'api-key.txt'
   $apiKey = Get-Content $apiKeyFile
 
   # Set the API key
@@ -39,3 +39,4 @@ function Add-FunctionFromGPT {
 
 # Automatically add the phrase "write a powershell function that" to the prompt.
 # Update this so it loads my api key from a file.
+# load the key from the current directory.
