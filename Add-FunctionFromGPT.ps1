@@ -15,8 +15,11 @@ function Add-FunctionFromGPT {
     Install-Module openai
   }
 
+  # Load the API key from a file
+  $apiKeyFile = 'C:\path\to\api-key.txt'
+  $apiKey = Get-Content $apiKeyFile
+
   # Set the API key
-  $apiKey = 'your-api-key'
   Set-OpenAIKey -Key $apiKey
 
   # Send the command description to chat GPT
@@ -35,3 +38,4 @@ function Add-FunctionFromGPT {
 # and it adds the returned function to the powershell namespace, executed by the given alias.
 
 # Automatically add the phrase "write a powershell function that" to the prompt.
+# Update this so it loads my api key from a file.
