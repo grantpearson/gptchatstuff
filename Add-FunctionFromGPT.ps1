@@ -7,6 +7,9 @@ function Add-FunctionFromGPT {
     [string] $Alias
   )
 
+  # Add the prompt prefix to the description
+  $prompt = "write a PowerShell function that $Description"
+
   # Install the openai module if it is not already installed
   if (!(Get-Module openai -ListAvailable)) {
     Install-Module openai
@@ -17,7 +20,7 @@ function Add-FunctionFromGPT {
   Set-OpenAIKey -Key $apiKey
 
   # Send the command description to chat GPT
-  $response = Invoke-OpenAI -Model chat -Prompt $Description
+  $response = Invoke-OpenAI -Model chat -Prompt $prompt
 
   # Parse the response and create a PowerShell function
   $function = [scriptblock]::Create($response)
@@ -30,3 +33,5 @@ function Add-FunctionFromGPT {
 # write a powershell function that takes as input the description of a command and an alias
 # and works as follows. It prompts chat gpt for a powershell function that implements that description,
 # and it adds the returned function to the powershell namespace, executed by the given alias.
+
+# Automatically add the phrase "write a powershell function that" to the prompt.
