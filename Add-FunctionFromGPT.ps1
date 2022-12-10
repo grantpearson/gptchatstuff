@@ -10,23 +10,31 @@ function Add-FunctionFromGPT {
   # Add the prompt prefix to the description
   $prompt = "write a PowerShell function that $Description"
 
-  # Install the openai module if it is not already installed
-  if (!(Get-Module openai -ListAvailable)) {
-    Install-Module openai
-  }
-
-  # Load the API key from a file in the current directory
-  $apiKeyFile = Join-Path -Path (Get-Location) -ChildPath 'api-key.txt'
+  # Load the API key from a file
+  $apiKeyFile = 'C:\path\to\api-key.txt'
   $apiKey = Get-Content $apiKeyFile
 
-  # Set the API key
-  Set-OpenAIKey -Key $apiKey
+  # Set the headers for the HTTP request
+  $headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = "Bearer $apiKey"
+  }
 
-  # Send the command description to chat GPT
-  $response = Invoke-OpenAI -Model chat -Prompt $prompt
+  # Set the data for the HTTP request
+  $data = @{
+    'prompt' = $prompt
+    'max_tokens' = 1024
+    'n' = 1
+    'stop' = $null
+    'temperature' = 0.5
+  }
+
+  # Send the HTTP POST request to the OpenAI API
+  $response = Invoke-WebRequest -Method Post -Uri 'https://api.openai.com/v1/completions' -Headers $headers -Body $data
 
   # Parse the response and create a PowerShell function
-  $function = [scriptblock]::Create($response)
+  $function = ($response.Content | ConvertFrom-Json).choices[0].text
+  $function = [scriptblock]::Create($function)
 
   # Add the function to the PowerShell namespace
   Set-Item -Path "Function:$Alias" -Value $function
@@ -34,9 +42,4 @@ function Add-FunctionFromGPT {
 
 # Original prompt:
 # write a powershell function that takes as input the description of a command and an alias
-# and works as follows. It prompts chat gpt for a powershell function that implements that description,
-# and it adds the returned function to the powershell namespace, executed by the given alias.
-
-# Automatically add the phrase "write a powershell function that" to the prompt.
-# Update this so it loads my api key from a file.
-# load the key from the current directory.
+# and works as follows. It prompts chat gpt
