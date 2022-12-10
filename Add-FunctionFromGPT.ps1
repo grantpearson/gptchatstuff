@@ -10,8 +10,8 @@ function Add-FunctionFromGPT {
   # Add the prompt prefix to the description
   $prompt = "write a PowerShell function that $Description"
 
-  # Load the API key from a file
-  $apiKeyFile = 'C:\path\to\api-key.txt'
+  # Load the API key from a file in the current directory
+  $apiKeyFile = Join-Path -Path (Get-Location) -ChildPath 'api-key.txt'
   $apiKey = Get-Content $apiKeyFile
 
   # Set the headers for the HTTP request
@@ -42,4 +42,4 @@ function Add-FunctionFromGPT {
 
 # Original prompt:
 # write a powershell function that takes as input the description of a command and an alias
-# and works as follows. It prompts chat gpt
+# and works as follows. It prompts chat gpt for a
