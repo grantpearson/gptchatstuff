@@ -55,7 +55,7 @@ function Load-ApiKey {
     )
   
     # Add the prompt prefix to the description
-    $prompt = "write a PowerShell function named (in the global scope by appending global: to the function name) $Name that $Description"
+    $prompt = "write a PowerShell function named $Name (in the global scope by appending global: to the function name) that $Description"
   
     # Get the function from GPT
     $functionCode = Get-FunctionFromGPT -Prompt $prompt
