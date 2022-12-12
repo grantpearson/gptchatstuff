@@ -33,7 +33,7 @@ function Load-ApiKey {
       'n' = 1
       'stop' = $null
       'temperature' = 0.5
-      'model' = 'text-davinci-002'
+      'model' = 'text-davinci-003'
     }
     $jsonData = $data | ConvertTo-Json
   
