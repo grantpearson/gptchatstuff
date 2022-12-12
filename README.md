@@ -26,6 +26,6 @@ Is-Prime 5
 ```
 The Add-FunctionFromGPT function also outputs the generated function code to the console, so you can see how the function was created.
 
-##Limitations
+## Limitations
 
 The generated functions are created using the text-davinci-002 model, which is optimized for natural language generation. As such, the generated functions may not always be syntactically correct or follow best practices for PowerShell development. Use the generated functions at your own risk.
